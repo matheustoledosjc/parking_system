@@ -12,15 +12,15 @@ class ParkingsController < ApplicationController
     if parking.save
       render json: { message: "created" }, status: :created
     else
-      render json: { error: "invalid transition, #{parking.errors.full_messages}" }, status: :ok
+      render json: { error: "invalid transition, #{parking.errors.full_messages}" }, status: :bad_request
     end
   end
 
   def pay
     begin
-      @parking.pay!      
+      @parking.pay!
     rescue => e
-      render json: { error: "invalid transition, #{e}" }, status: :ok
+      render json: { error: "invalid transition, #{e}" }, status: :bad_request
     else
       render json: { message: "paid" }, status: :accepted
     end
@@ -30,7 +30,7 @@ class ParkingsController < ApplicationController
     begin
       @parking.out!
     rescue => e
-      render json: { error: "invalid transition, #{e}" }, status: :ok
+      render json: { error: "invalid transition, #{e}" }, status: :bad_request
     else
       render json: { message: "out" }, status: :accepted
     end
@@ -53,10 +53,10 @@ class ParkingsController < ApplicationController
   end
 
   def rescue_invalid_plate
-    render json: { error: 'invalid plate' }, status: :ok
+    render json: { error: 'invalid plate' }, status: :forbidden
   end
 
   def rescue_plate_not_found
-    render json: { error: 'plate not found' }, status: :ok
+    render json: { error: 'plate not found' }, status: :not_found
   end
 end

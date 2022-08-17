@@ -1,24 +1,27 @@
 # README
+This system was created for educational and evaluative purposes, is a simple ruby on rails application to simulate a parking operation
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+# HOW TO START?
+To run the project you will only need docker and docker-compose
+1- Clone the repository
+2- In the project folder run: docker-compose up
+3- After build, if this is your first time starting the project, run: docker-compose run web rails db:create db:migrate
 
-* Ruby version
+# RUNNING UNIT TESTS
+1- With the container instance 'db' and 'web' running, run: docker-compose run web bundle exec rspec -f d
 
-* System dependencies
+# FUNCTIONAL TESTS
+replace PLATE, with a plate of your choice in the format "AAA-9999"
 
-* Configuration
+1- TO RECORD A NEW ENTRY 
+curl -X POST -d '{"plate": "PLATE"}' -H 'Content-type: application/json' http://127.0.0.1/parking
 
-* Database creation
+2- TO RECORD PAYMENT FOR A PLATE
+curl -X PUT http://127.0.0.1/parking/PLATE/pay
 
-* Database initialization
+3- TO RECORD EXIT FOR A PLATE
+curl -X PUT http://127.0.0.1/parking/PLATE/out
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+4- TO SEE ALL RECORDS OF A PLATE
+curl http://127.0.0.1/parking/PLATE

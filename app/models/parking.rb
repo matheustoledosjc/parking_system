@@ -1,7 +1,7 @@
 class Parking < ApplicationRecord
   include ActionView::Helpers::DateHelper
   before_create do
-    self.status = :waiting_payment
+    self.status ||= :waiting_payment
   end
 
   validate :plate_has_pendency?, on: :create
@@ -27,14 +27,14 @@ class Parking < ApplicationRecord
   end
 
   def time
-    self.left ? distance_of_time_in_words(self.paid_at, self.created_at) : distance_of_time_in_words(Time.zone.now, self.created_at)
+    self.paid? ? distance_of_time_in_words(self.paid_at, self.created_at) : distance_of_time_in_words(Time.zone.now, self.created_at)
   end
 
-  def paid
+  def paid?
     self.paid_at.present?
   end
 
-  def left
+  def left?
     self.left_at.present?
   end
 end

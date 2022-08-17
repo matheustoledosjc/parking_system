@@ -10,4 +10,4 @@ ADD Gemfile.lock /app/Gemfile.lock
 
 RUN bundle install
 
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "80"]
