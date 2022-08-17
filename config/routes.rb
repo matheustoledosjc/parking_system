@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  defaults format: :json do
+    post 'parking' , to: 'parkings#park'
+    put 'parking/:plate/pay' , to: 'parkings#pay'
+    put 'parking/:plate/out' , to: 'parkings#out'
+    get 'parking/:plate' , to: 'parkings#show', format: "json"
+  end
 end
